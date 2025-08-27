@@ -1,0 +1,125 @@
+<div class="header">
+  <p>Customer Portal</p>
+  <button (click)="onClose()" class="close-btn">&times;</button>
+</div>
+<mat-divider></mat-divider>
+
+<!-- Form Area where input fields and radio buttons will be-->
+<mat-dialog-content class="custom-dialog">
+  <form [formGroup]="dialogForm">
+    <div class="main-container">
+      <mat-radio-group
+        aria-label="Select an option"
+        formControlName="portalType"
+        class="custom-radio-button"
+      >
+        <div class="container radio-btn-container">
+          <mat-radio-button value="Standard">
+            <div class="radio-label">
+              <div class="title">Standard Portal</div>
+              <div class="subtext">Uses portal.e4score.com/name structure</div>
+            </div>
+          </mat-radio-button>
+          <mat-radio-button value="Enterprise">
+            <div class="radio-label">
+              <div class="title">Enterprise Portal</div>
+              <div class="subtext">Custom subdomain with dual URL access</div>
+            </div>
+          </mat-radio-button>
+        </div>
+        @if(dialogForm.get('portalType')?.hasError('required')){
+        <mat-error> Logo is required for portal branding</mat-error>
+        }
+      </mat-radio-group>
+      <div class="input-field-container">
+        <div class="container custom-form-field">
+          <mat-form-field floatLabel="always" appearance="outline" hideRequiredMarker="true">
+            <mat-label>Portal Name (URL)</mat-label>
+            <input matInput formControlName="portalName" placeholder="Portal Name" />
+
+            <!-- Error message -->
+            @if(dialogForm.get('portalName')?.hasError('required')){
+            <mat-error> Portal Name is required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field floatLabel="always" appearance="outline" hideRequiredMarker="true">
+            <mat-label>Display Name</mat-label>
+            <input matInput formControlName="displayName" placeholder="ACME Corporation Portal" />
+
+            <!-- Error message -->
+            @if(dialogForm.get('displayName')?.hasError('required')){
+            <mat-error> Display Name is required</mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <!-- 3rd Row -->
+        <div class="container custom-form-field">
+          <mat-form-field floatLabel="always" appearance="outline" hideRequiredMarker="true">
+            <mat-label>Brand Color</mat-label>
+            <input matInput formControlName="brandColor" placeholder="#FFFFFF" />
+
+            <!-- Error message -->
+            @if(dialogForm.get('brandColor')?.hasError('required')){
+            <mat-error> Brand Color is required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" floatLabel="always" class="file-upload-field">
+            <!-- Hidden file input -->
+            <input
+              type="file"
+              hidden
+              #fileInput
+              (change)="onFileSelected($event)"
+              accept="image/*"
+            />
+
+            <!-- Readonly text field that shows file name -->
+
+            <input
+              matInput
+              [value]="dialogForm.get('companyLogo')?.value?.name"
+              placeholder="Upload Company Logo"
+              formControlName="companyLogo"
+              (click)="fileInput.click()"
+              readonly="true"
+            />
+
+            <!-- Upload icon at the end -->
+            <button mat-icon-button matSuffix type="button" (click)="fileInput.click()">
+              <mat-icon svgIcon="upload"></mat-icon>
+            </button>
+
+            @if(dialogForm.get('companyLogo')?.hasError('required')){
+            <mat-error>Logo is required for portal branding</mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-divider></mat-divider>
+<!-- Buttons To control Modal Submission-->
+<mat-dialog-actions class="custom-button">
+  <mat-button-toggle-group
+    class="custom-button-toggles"
+    [(ngModel)]="status"
+    name="StatusSelection"
+    aria-label="StatusSelection"
+  >
+    <mat-button-toggle value="Active">Active</mat-button-toggle>
+    <mat-button-toggle value="Inactive">Inactive</mat-button-toggle>
+  </mat-button-toggle-group>
+  <div>
+    <button matButton="filled" (click)="onClose()" class="secondary">
+      <mat-icon class="dialog-icons" svgIcon="close"></mat-icon>
+      Close
+    </button>
+    <button matButton="filled" class="primary" (click)="onSubmit()">
+      <mat-icon class="dialog-icons" svgIcon="create"></mat-icon>
+      Create Portal
+    </button>
+  </div>
+</mat-dialog-actions>

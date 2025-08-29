@@ -1,15 +1,24 @@
 .small-btn {
-    font-size: 24px; // smaller text
-    padding: 24px;
-    min-width: 150px; // smaller button
-    min-height: 60px;
+  font-size: 24px; // smaller text
+  padding: 24px;
+  min-width: 150px; // smaller button
+  min-height: 60px;
 }
 
 div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 100vw;
-    background-color: aliceblue;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  background-color: aliceblue;
+}
+
+.table {
+  width: 80%;
+  border: 1px solid black; /* light gray border */
+  border-radius: 8px; /* optional rounded corners */
+  overflow-y: scroll; /* keeps rounded corners clean */
 }
